@@ -191,7 +191,12 @@ function post(path, details, message, btn){
         },
         body: formBody
     }).then(data => {
-        showSuccessMessage(message);
+        if(data.status === 202){
+            showSuccessMessage(message);
+        }else{
+            const reason = data.headers.get('reason');
+            showErrorMessage(data.status + ": " + reason);
+        }    
         stopWait(btn);
     }).catch((error) => {
         showErrorMessage(error);

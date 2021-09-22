@@ -16,6 +16,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import org.github.phillipkruger.weeklystatus.report.ReportService;
 
 /**
@@ -34,12 +35,16 @@ public class WeeklyStatusApi {
     @POST
     @Path("/createReport")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public void createReport(@NotNull @FormParam("token") String token, 
+    public Response createReport(@NotNull @FormParam("token") String token, 
             @NotNull @FormParam("email") String email, 
-            @NotNull @FormParam("repositories") String repositories) throws Exception{
-        
-        Report report = reportService.createReport(token, email, toList(repositories));
-        reportService.emailReport(report);
+            @NotNull @FormParam("repositories") String repositories) {
+        try {
+            Report report = reportService.createReport(token, email, toList(repositories));
+            reportService.emailReport(report);
+            return Response.accepted().build();
+        }catch(Throwable t){
+            return Response.serverError().header("reason", t.getMessage()).build();
+        }
     }
     
     @POST
