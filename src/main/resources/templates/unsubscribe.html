@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Weekly Status</title>
+    </head>
+    <body>
+        <h1>Weekly Status</h1>
+        Hello {name}<br/>
+        You successfully unsubscribed for a weekly report on the following repositories<br/>
+        <ul>
+        {#for r in repositories}
+            <li>{r}</li>
+        {/for}
+        </ul>
+    </body>
+</html>

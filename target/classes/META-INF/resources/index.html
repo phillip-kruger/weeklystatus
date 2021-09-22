@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap"> 
+        <title>Weekly Status</title>
+
+        <style>
+            h1 {
+                font-family: 'Black Ops One', cursive;
+/*                text-align: center;*/
+            }
+            .wait {
+                cursor: wait;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <br/><h1><i class="bi bi-list-check"></i> Weekly Status</h1>
+
+            <div id="alert" class="alert alert-dismissible fade" role="alert">
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header bg-dark p-2 text-light bg-opacity-75">
+                            Create now / subscribe
+                        </div>
+                        <div class="card-body">
+
+                            <div class="mb-3">
+                                <label for="txtEmailSubscribe" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="txtEmailSubscribe">
+                            </div>
+                            <div class="mb-3">
+                                <label for="txtTokenSubscribe" class="form-label">Token</label>
+                                <input type="password" class="form-control" id="txtTokenSubscribe" aria-describedby="txtTokenSubscribeHelp">
+                                <div id="txtTokenSubscribeHelp" class="form-text">
+                                    Create a read-only <a href="https://github.com/settings/tokens" target="_blank">Personal access token</a> in GitHub.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="txtReposSubscribe" class="form-label">Repositories</label>
+                                <textarea class="form-control" id="txtReposSubscribe" aria-describedby="txtReposSubscribeHelp"></textarea>
+                                <div id="txtReposSubscribeHelp" class="form-text">
+                                    Repositories to scan - one repository per line.
+                                </div>
+                            </div>
+                            <button id="btnReport" class="btn btn-success"><i class="bi bi-card-checklist"></i> Create now</button>
+                            <button id="btnSubscribe" class="btn btn-success float-end"> <i class="bi bi-envelope"></i> Subscribe</button>
+                        </div>
+
+                    </div>
+                    <br/>
+                    <div class="card">
+                        <div class="card-header bg-dark p-2 text-light bg-opacity-75">
+                            Unsubscribe
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="txtEmailUnsubscribe" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="txtEmailUnsubscribe">
+                            </div>
+                            <button id="btnUnsubscribe" type="submit" class="btn btn-danger float-end"><i class="bi bi-trash"></i> Unsubscribe</button>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header bg-dark p-2 text-light bg-opacity-75">
+                            History
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="txtEmailHistory" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="txtEmailHistory">
+                            </div>
+                            <button id="btnHistory" type="submit" class="btn btn-primary float-end"><i class="bi bi-clock-history"></i> History</button>
+
+                            <div class="accordion accordion-flush" id="accordionHistory">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+        <script src="status.js"></script>
+    </body>
+</html>
