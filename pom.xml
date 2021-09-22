@@ -59,7 +59,7 @@
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-mailer</artifactId>
+            <artifactId>quarkus-qute</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -78,10 +78,9 @@
             <artifactId>quarkus-scheduler</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.quarkiverse.loggingmanager</groupId>
-            <artifactId>quarkus-logging-manager</artifactId>
-            <version>2.1.0</version>
-            <scope>runtime</scope>
+            <groupId>com.sendgrid</groupId>
+            <artifactId>sendgrid-java</artifactId>
+            <version>4.7.4</version>
         </dependency>
     </dependencies>
     <build>

@@ -1,8 +1,6 @@
 package org.github.phillipkruger.weeklystatus.report;
 
 import org.github.phillipkruger.weeklystatus.github.GitHubService;
-import io.quarkus.mailer.Mail;
-import io.quarkus.mailer.Mailer;
 import io.quarkus.qute.Engine;
 import io.quarkus.qute.Template;
 import java.io.IOException;
@@ -20,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.event.ObservesAsync;
 import javax.inject.Inject;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
@@ -28,6 +27,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
+import org.github.phillipkruger.weeklystatus.mail.Mailer;
 import org.kohsuke.github.GHEvent;
 import org.kohsuke.github.GHEventInfo;
 import org.kohsuke.github.GHEventPayload;
@@ -56,13 +56,18 @@ public class ReportService {
     GitHubService gitHubService;
     
     @Inject
-    Mailer mailer;
-    
-    @Inject
     Engine engine;
     
     @Inject
     Template report;
+    
+    @Inject
+    Mailer mailer;
+    
+    public void createReportAndSendEmail(@ObservesAsync ReportEvent event) throws IOException{
+        Report report = createReport(event.getToken(), event.getEmail(), event.getRepositories());
+        emailReport(report);
+    }
     
     public Report createReport(String token, String email, List<String> repositories) throws IOException {
         repositories = repositories.stream().map(String::trim).collect(Collectors.toList());
@@ -112,7 +117,7 @@ public class ReportService {
         return (List<Report>)historyQuery.getResultList();
     }
     
-    public void emailReport(Report r){
+    public void emailReport(Report r) throws IOException{
         Map<String, Set<Done>> dones = new HashMap<>();
         Map<String, Set<Todo>> todos = new HashMap<>();
         for(Repo repo : r.getRepos()){
@@ -131,7 +136,7 @@ public class ReportService {
                 .data("counter", new Counter())
                 .render();
 
-        mailer.send(Mail.withHtml(r.getEmail(), subject, mailBody));
+        mailer.send(r.getEmail(), subject, mailBody);
     }
     
     private Map<String, Set<Done>> getDones(GHUser user, List<String> repositories) throws IOException {    

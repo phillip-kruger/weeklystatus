@@ -1,7 +1,5 @@
 package org.github.phillipkruger.weeklystatus.subscription;
 
-import io.quarkus.mailer.Mail;
-import io.quarkus.mailer.Mailer;
 import io.quarkus.qute.Template;
 import java.io.IOException;
 import java.util.List;
@@ -9,6 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import org.github.phillipkruger.weeklystatus.github.GitHubService;
+import org.github.phillipkruger.weeklystatus.mail.Mailer;
 import org.kohsuke.github.GHMyself;
 
 @ApplicationScoped
@@ -59,20 +58,20 @@ public class SubscriptionService {
         return Subscription.findAll().list();
     }
     
-    private void emailSubscription(String emailAddress, String name, List<String> repositories) {
+    private void emailSubscription(String emailAddress, String name, List<String> repositories) throws IOException {
         String mailBody = subscribe.data("name", name)
                 .data("repositories", repositories)
                 .render();
 
-        mailer.send(Mail.withHtml(emailAddress, "Subscribe", mailBody));
+        mailer.send(emailAddress, "Subscribe", mailBody);
     }
     
-    private void emailUnsubscribe(String emailAddress, String name, List<String> repositories) {
+    private void emailUnsubscribe(String emailAddress, String name, List<String> repositories) throws IOException {
         String mailBody = unsubscribe.data("name", name)
                 .data("repositories", repositories)
                 .render();
 
-        mailer.send(Mail.withHtml(emailAddress, "Unsubscribe", mailBody));
+        mailer.send(emailAddress, "Unsubscribe", mailBody);
     }
     
 }

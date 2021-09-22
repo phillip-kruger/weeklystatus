@@ -6,6 +6,7 @@ import org.github.phillipkruger.weeklystatus.report.Report;
 import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.List;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
@@ -18,6 +19,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.github.phillipkruger.weeklystatus.cron.WeeklyCron;
+import org.github.phillipkruger.weeklystatus.report.ReportEvent;
 import org.github.phillipkruger.weeklystatus.report.ReportService;
 
 /**
@@ -36,6 +38,9 @@ public class WeeklyStatusApi {
     @Inject
     WeeklyCron weeklyCron;
     
+    @Inject
+    private Event<ReportEvent> reportEvent;
+    
     @POST
     @Path("/createReport")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -43,8 +48,7 @@ public class WeeklyStatusApi {
             @NotNull @FormParam("email") String email, 
             @NotNull @FormParam("repositories") String repositories) {
         try {
-            Report report = reportService.createReport(token, email, toList(repositories));
-            reportService.emailReport(report);
+            reportEvent.fireAsync(new ReportEvent(token, email, toList(repositories)));
             return Response.accepted().build();
         }catch(Throwable t){
             return Response.serverError().header("reason", t.getMessage()).build();
