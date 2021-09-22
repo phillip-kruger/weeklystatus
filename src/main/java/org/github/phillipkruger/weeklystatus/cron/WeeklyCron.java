@@ -23,7 +23,7 @@ public class WeeklyCron {
     ReportService reportService;
     
     @Scheduled(cron = "{cron.expr}")
-    void cron() {
+    public void cron() {
         List<Subscription> subscriptions = subscriptionService.subscriptions();
         for(Subscription s:subscriptions){
             try {
