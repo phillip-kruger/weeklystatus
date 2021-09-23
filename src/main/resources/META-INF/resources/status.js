@@ -191,7 +191,7 @@ function post(path, details, message, btn){
         },
         body: formBody
     }).then(data => {
-        if(data.status === 202){
+        if(data.status >= 200 && data.status <= 299){
             showSuccessMessage(message);
         }else{
             const reason = data.headers.get('reason');

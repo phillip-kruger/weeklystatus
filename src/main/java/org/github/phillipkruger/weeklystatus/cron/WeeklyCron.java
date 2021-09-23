@@ -4,7 +4,9 @@ import org.github.phillipkruger.weeklystatus.subscription.Subscription;
 import org.github.phillipkruger.weeklystatus.subscription.SubscriptionService;
 import org.github.phillipkruger.weeklystatus.report.Report;
 import io.quarkus.scheduler.Scheduled;
+import java.io.IOException;
 import java.util.List;
+import javax.enterprise.event.ObservesAsync;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.github.phillipkruger.weeklystatus.report.ReportService;
@@ -34,5 +36,9 @@ public class WeeklyCron {
                 ex.printStackTrace();
             }
         }   
+    }
+    
+    public void createCron(@ObservesAsync CronEvent event) throws IOException{
+        cron();
     }
 }

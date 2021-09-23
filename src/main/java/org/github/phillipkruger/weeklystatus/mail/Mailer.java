@@ -12,13 +12,13 @@ import javax.enterprise.context.ApplicationScoped;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 /**
- *
+ * Sending mail using the client library
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 @ApplicationScoped
 public class Mailer {
     
-    @ConfigProperty(name = "quarkus.mailer.password")
+    @ConfigProperty(name = "sendgrid.apikey")
     String apiKey;
             
     public void send(String to, String subject, String htmlBody) throws IOException{
@@ -49,6 +49,4 @@ public class Mailer {
             throw ex;
         }
     }
-    
-    
 }

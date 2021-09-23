@@ -18,7 +18,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.github.phillipkruger.weeklystatus.cron.WeeklyCron;
+import org.github.phillipkruger.weeklystatus.cron.CronEvent;
 import org.github.phillipkruger.weeklystatus.report.ReportEvent;
 import org.github.phillipkruger.weeklystatus.report.ReportService;
 
@@ -36,10 +36,10 @@ public class WeeklyStatusApi {
     SubscriptionService subscriptionService;
     
     @Inject
-    WeeklyCron weeklyCron;
+    Event<CronEvent> cronEvent;
     
     @Inject
-    private Event<ReportEvent> reportEvent;
+    Event<ReportEvent> reportEvent;
     
     @POST
     @Path("/createReport")
@@ -89,8 +89,9 @@ public class WeeklyStatusApi {
     @GET
     @Path("/cron")
     @Produces(MediaType.TEXT_PLAIN)
-    public void cron() throws Exception{
-        weeklyCron.cron();
+    public Response cron() throws Exception{
+        cronEvent.fireAsync(new CronEvent());
+        return Response.accepted("Cron scheduled").build();
     }
     
     @POST
