@@ -105,7 +105,6 @@ public class ReportService {
     @Transactional
     public void saveReport(Report report){
         
-        report = em.merge(report);
         em.persist(report);
         em.flush();
     }
