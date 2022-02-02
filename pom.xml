@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.github.phillipkruger</groupId>
     <artifactId>weeklystatus</artifactId>
-    <version>1.0.8</version>
+    <version>1.0.9-SNAPSHOT</version>
     <name>Weekly Status</name>
     <properties>
         <compiler-plugin.version>3.8.1</compiler-plugin.version>
@@ -25,7 +25,7 @@
         <connection>scm:git:https://${git.username}:${git.password}@github.com/phillip-kruger/weeklystatus.git</connection>
         <url>https://github.com/phillip-kruger/weeklystatus.git</url>
         <developerConnection>scm:git:https://${git.username}:${git.password}@github.com/phillip-kruger/weeklystatus.git</developerConnection>
-        <tag>v1.0.8</tag>
+        <tag>HEAD</tag>
     </scm>
     
     <distributionManagement>
